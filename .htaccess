@@ -1,0 +1,4 @@
+Options +ExecCGI
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ zima/zima/wsgi.py/$1 [QSA,PT]
