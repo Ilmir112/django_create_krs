@@ -39,12 +39,13 @@ class MyLoginView(LoginView):
             postgres_conn_user = {
                 'database': 'users',
                 'user': 'postgres',
-                'password': '1953',
-                'host': 'localhost',
+                'password': '195375AsD+',
+                'host': '176.109.99.210',
                 'port': '5432'
             }
-            self.user_datas(username,postgres_conn_user)
-            return redirect('home')  # Перенаправление на главную страницу
+
+            self.user_datas(username, postgres_conn_user)
+            return redirect('registration/home')  # Перенаправление на главную страницу
         else:
             # В случае неудачной авторизации выводим сообщение об ошибке
             form.add_error(None, 'Неправильное имя пользователя или пароль')
@@ -57,7 +58,7 @@ class MyLoginView(LoginView):
             "SELECT username, last_name, first_name, patronymic, position, organization FROM plan_krs_customuser "
             "WHERE username=(%s)", (username,))
         user_login = cursor.fetchone()
-
+        print(user_login)
         conn.commit()
         conn.close()
         conn2 = psycopg2.connect(**postgres_conn_user)

@@ -13,7 +13,7 @@ from .views import MyLoginView
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('register/', views.register, name='register'),
     path('login/', MyLoginView.as_view(), name='login'),
     path('logout/', views.logout_view, name='logout'),

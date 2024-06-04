@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'users',
         'USER': 'postgres',
         'PASSWORD': '195375AsD+',
-        'HOST': '87.242.85.51',
+        'HOST': '176.109.99.210',
         'PORT': '5432',
     }
 }
@@ -105,7 +105,7 @@ THUMBNAIL_BASEDIR = 'thumbnails'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-
+AUTH_USER_MODEL = 'plan_krs.customuser'
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
