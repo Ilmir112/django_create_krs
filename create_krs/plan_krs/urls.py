@@ -17,13 +17,14 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', MyLoginView.as_view(), name='login'),
     path('logout/', views.logout_view, name='logout'),
-    path('', views.home, name='home'),
-    path('zima/', views.run_exe_zima),
+    path('home/', views.home, name='home'),
+    path('', views.home, name=''),
+    path('home/zima/', views.run_exe_zima),
     path('zima_download/', views.download_and_cache_zima_app),
     ]
 
-if settings.DEBUG:
-    urlpatterns.append(path('static/<path:path>', never_cache(serve)))
+# if settings.DEBUG:
+#     urlpatterns.append(path('static/<path:path>', never_cache(serve)))
     # urlpatterns += static(settings.MEDIA_URL,
     #                       document_root=settings.MEDIA_ROOT)
 

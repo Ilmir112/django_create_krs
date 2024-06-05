@@ -83,11 +83,11 @@ WSGI_APPLICATION = 'create_krs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'krs',
+        'NAME': 'users',
         'USER': 'postgres',
         'PASSWORD': '195375AsD+',
-        'HOST': 'localhost',
-        # 'HOST': '31.129.99.186',
+        # 'HOST': 'localhost',
+        'HOST': '31.129.99.186',
         'PORT': '5432',
     }
 }
