@@ -155,18 +155,18 @@ def download_and_cache_zima_app(request):
 
 
 def get_version_from_json():
-    with open('version_app.json', 'r') as file:
+    with open('plan_krs/version_app.json', 'r') as file:
         data = json.load(file)
         version_app = data['version']
         print(version_app)
     return version_app
 
 def update_version(new_version):
-    with open('version_app.json', 'r') as file:
+    with open('plan_krs/version_app.json', 'r') as file:
         data = json.load(file)
         data['version'] = new_version
 
-    with open('version_app.json', 'w') as file:
+    with open('plan_krs/version_app.json', 'w') as file:
         json.dump(data, file)
 
 
