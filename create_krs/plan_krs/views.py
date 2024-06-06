@@ -13,7 +13,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from multiprocessing import Process
-
+from django.conf import settings
 
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
@@ -21,6 +21,9 @@ from django.contrib.auth import authenticate, login
 from django import forms
 
 from .forms import CustomUserCreationForm
+
+file_name = os.path.join(settings.BASE_DIR, 'plan_krs/version_app.json')
+details_raw = open(file_name, 'r')
 
 class MyLoginView(LoginView):
     template_name = 'registration/login.html'
@@ -155,18 +158,15 @@ def download_and_cache_zima_app(request):
 
 
 def get_version_from_json():
-    with open('plan_krs/version_app.json', 'r') as file:
-        data = json.load(file)
-        version_app = data['version']
-        print(version_app)
+    data = json.load(details_raw)
+    version_app = data['version']
+    print(version_app)
     return version_app
 
 def update_version(new_version):
-    with open('plan_krs/version_app.json', 'r') as file:
-        data = json.load(file)
-        data['version'] = new_version
 
-    with open('plan_krs/version_app.json', 'w') as file:
-        json.dump(data, file)
+    data = json.load(details_raw)
+    data['version'] = new_version
+    json.dump(data, details_raw)
 
 
