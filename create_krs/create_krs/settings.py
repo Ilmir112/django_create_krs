@@ -86,8 +86,8 @@ DATABASES = {
         'NAME': 'krs',
         'USER': 'postgres',
         'PASSWORD': '195375AsD+',
-        'HOST': 'localhost',
-        # 'HOST': '31.129.99.186',
+        # 'HOST': 'localhost',
+        'HOST': '31.129.99.186',
         'PORT': '5432',
     }
 }
