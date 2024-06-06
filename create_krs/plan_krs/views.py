@@ -25,6 +25,14 @@ from .forms import CustomUserCreationForm
 file_name = os.path.join(settings.BASE_DIR, 'plan_krs/version_app.json')
 details_raw = open(file_name, 'r')
 
+postgres_conn_user = {
+                'database': 'krs',
+                'user': 'postgres',
+                'password': '195375AsD+',
+                'host': '31.129.99.186',
+                'port': '5432'
+            }
+
 class MyLoginView(LoginView):
     template_name = 'registration/login.html'
 
@@ -39,13 +47,7 @@ class MyLoginView(LoginView):
         if user is not None:
 
             login(self.request, user)
-            postgres_conn_user = {
-                'database': 'users',
-                'user': 'postgres',
-                'password': '195375AsD+',
-                'host': '31.129.99.186',
-                'port': '5432'
-            }
+
 
 
             self.user_datas(username, postgres_conn_user)
@@ -123,7 +125,7 @@ def run_exe_zima(request):
         return HttpResponse(f"Error: {e}")
 
 def download_and_cache_zima_app(request):
-    version_app = get_version_from_json()
+    version_app = get_version_from_json(postgres_conn_user)
     # Получаем версию приложения из источника (например, из GitHub)
     response = requests.get('https://api.github.com/repos/Ilmir112/Create_work_krs/releases/latest')
     latest_version = response.json()['tag_name']
@@ -134,7 +136,7 @@ def download_and_cache_zima_app(request):
         # Вызываем запрос только при наличии новой версии
         response = requests.get(url)
 
-        update_version(latest_version)
+        update_version(version_app, latest_version)
 
         with open("zima.zip", "wb") as file:  # Сохраняем архив в папку tmp
             file.write(response.content)
@@ -157,16 +159,35 @@ def download_and_cache_zima_app(request):
         return HttpResponse(f"Текущая версия {version_app}")
 
 
-def get_version_from_json():
-    data = json.load(details_raw)
-    version_app = data['version']
+def get_version_from_json(postgres_conn_user):
+    conn = psycopg2.connect(**postgres_conn_user)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT old, new FROM version_app ")
+    user_login = cursor.fetchone()
+    print(user_login)
+    conn.commit()
+    conn.close()
+
+    version_app = user_login[0]
     print(version_app)
     return version_app
 
-def update_version(new_version):
+def update_version(old_version, new_version):
+    conn = psycopg2.connect(**postgres_conn_user)
+    cursor = conn.cursor()
 
-    data = json.load(details_raw)
-    data['version'] = new_version
-    json.dump(data, details_raw)
+    cursor.execute(
+        "INSERT INTO version_app ("
+        "old, new) VALUES (%s, %s)",
+        ('old_version', 'new_version'))
+
+    user_login = cursor.fetchone()
+    print(user_login)
+    conn.commit()
+    conn.close()
+
+
 
 
