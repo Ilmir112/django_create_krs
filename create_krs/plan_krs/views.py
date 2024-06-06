@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import subprocess
 import os
 import requests
@@ -126,15 +127,17 @@ def run_exe_zima(request):
 
 def download_and_cache_zima_app(request):
     version_app = get_version_from_json(postgres_conn_user)
+    print(f' текущая версия {version_app}')
     # Получаем версию приложения из источника (например, из GitHub)
     response = requests.get('https://api.github.com/repos/Ilmir112/Create_work_krs/releases/latest')
     latest_version = response.json()['tag_name']
-    print(latest_version)
+    print(f'выгруженная версия {latest_version}')
 
     if version_app != latest_version:  # Проверяем, если версии не совпадают
         url = f"https://github.com/Ilmir112/Create_work_krs/releases/download/{latest_version}/ZIMA.zip"
         # Вызываем запрос только при наличии новой версии
         response = requests.get(url)
+        print(version_app, latest_version)
 
         update_version(version_app, latest_version)
 
@@ -156,15 +159,17 @@ def download_and_cache_zima_app(request):
 
         return HttpResponse("PyQt5 app cached successfully")
     else:
+        print('текущая версия корректна')
         return HttpResponse(f"Текущая версия {version_app}")
 
 
 def get_version_from_json(postgres_conn_user):
     conn = psycopg2.connect(**postgres_conn_user)
     cursor = conn.cursor()
+    # cursor.execute("DROP version_app  ")
 
     cursor.execute(
-        "SELECT old, new FROM version_app ")
+        "SELECT old_column_name, new_column_name, date_update_column FROM version_app ORDER BY date_update_column ")
     user_login = cursor.fetchone()
     print(user_login)
     conn.commit()
@@ -177,14 +182,13 @@ def get_version_from_json(postgres_conn_user):
 def update_version(old_version, new_version):
     conn = psycopg2.connect(**postgres_conn_user)
     cursor = conn.cursor()
-
+    today_update = datetime.datetime.today()
+    print(today_update)
     cursor.execute(
         "INSERT INTO version_app ("
-        "old, new) VALUES (%s, %s)",
-        ('old_version', 'new_version'))
+        "old_column_name, new_column_name, date_update_column) VALUES (%s, %s, %s)",
+        (new_version, old_version, today_update))
 
-    user_login = cursor.fetchone()
-    print(user_login)
     conn.commit()
     conn.close()
 

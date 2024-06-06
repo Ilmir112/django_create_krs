@@ -18,6 +18,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('home/', views.home, name='home'),
     path('', views.home, name=''),
+    path('home/zima/', views.run_exe_zima),
     path('zima/', views.run_exe_zima),
     path('zima_download/', views.download_and_cache_zima_app),
     ]
