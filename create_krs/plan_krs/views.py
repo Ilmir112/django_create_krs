@@ -23,8 +23,9 @@ from django import forms
 
 from .forms import CustomUserCreationForm
 
-file_name = os.path.join(settings.BASE_DIR, 'plan_krs/version_app.json')
-details_raw = open(file_name, 'r')
+# file_name = os.path.join(settings.BASE_DIR, 'plan_krs/version_app.json')
+# details_raw = open(file_name, 'r')
+
 
 postgres_conn_user = {
                 'database': 'krs',
