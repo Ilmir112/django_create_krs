@@ -1,4 +1,7 @@
 Options +ExecCGI
-
+AddDefaultCharset utf8
+AddHandler wsgi-script .py
+RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ zima/zima/wsgi.py/$1 [QSA,PT]
+RewriteRule ^(.*)$ create_krs/create_krs/wsgi.py/$1 [QSA,PT]
+

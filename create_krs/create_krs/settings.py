@@ -91,8 +91,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'create_krs/plan_krs/static/image')
-# MEDIA_URL = '/create_krs/plan_krs/static/image/'
+
 
 THUMBNAIL_ALIASES = {
     '': {
@@ -140,6 +139,9 @@ USE_TZ = True
 #
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '/var/www/html/django_create_krs/create_krs/var/www/html')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'create_krs/plan_krs/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
