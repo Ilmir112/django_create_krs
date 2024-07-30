@@ -9,6 +9,7 @@ class FileSaveForm(forms.Form):
     file_path = forms.CharField(label='Введите путь для сохранения файла', max_length=150)
 
 
+
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
