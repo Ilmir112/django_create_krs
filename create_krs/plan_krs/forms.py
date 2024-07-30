@@ -3,6 +3,10 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
 from django.contrib.auth.views import LoginView
 
+from django import forms
+
+class FileSaveForm(forms.Form):
+    file_path = forms.CharField(label='Введите путь для сохранения файла', max_length=150)
 
 
 class CustomUserCreationForm(UserCreationForm):

@@ -1,3 +1,4 @@
+
 import asyncio
 import datetime
 import subprocess
@@ -127,7 +128,9 @@ def run_exe_zima(request):
         return HttpResponse(f"Error: {e}")
 
 def download_and_cache_zima_app(request):
+
     version_app = get_version_from_json(postgres_conn_user)
+    version_app = '1.0.2'
     print(f' текущая версия {version_app}')
     # Получаем версию приложения из источника (например, из GitHub)
     response = requests.get('https://api.github.com/repos/Ilmir112/Create_work_krs/releases/latest')
@@ -139,6 +142,7 @@ def download_and_cache_zima_app(request):
         # Вызываем запрос только при наличии новой версии
         response = requests.get(url)
         print(version_app, latest_version)
+
 
         update_version(version_app, latest_version)
 
@@ -192,7 +196,3 @@ def update_version(old_version, new_version):
 
     conn.commit()
     conn.close()
-
-
-
-
